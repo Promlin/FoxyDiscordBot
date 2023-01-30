@@ -1,5 +1,11 @@
+import json
+
 import disnake
 from disnake.ext import commands
+
+
+file = open("config.json", "r")
+config = json.load(file)
 
 bot = commands.Bot(command_prefix=".", help_command=None, intents=disnake.Intents.all())
 
@@ -35,5 +41,5 @@ async def on_message(message):
                 await message.delete()
                 await message.channel.send(f"{message.author.mention} такие слова запрещены!")
 
-
-bot.run("MTA2Nzg5OTEyMjEwMDc0ODMxOA.Ga3No2.iw5krY7bKIlQVCKlGPt_bc1ZjzudV0dEPvA5hg")
+#
+bot.run(config["token"])
