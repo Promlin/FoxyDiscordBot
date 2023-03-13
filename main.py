@@ -51,7 +51,7 @@ async def on_message(message):
 
 # Обработка ошибок
 # TODO добавить примеры ошибок
-@bot.event()
+@bot.event
 async def on_command_error(ctx, error):
     print(error)
 
