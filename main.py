@@ -1,13 +1,18 @@
 import json
-
 import disnake
 from disnake.ext import commands
+
+# TODO добавить проигрывание музыки из YouTube
+# TODO добавить библиотеку некоторых фраз (мотивация/анекдоты/прочее) и показывать рандомную при вызове команды
+# TODO устанавливать напоминания и делать оповещения
 
 file = open("config.json", "r")
 config = json.load(file)
 
-bot = commands.Bot(command_prefix=".", help_command=None, intents=disnake.Intents.all())
+bot = commands.Bot(command_prefix=".", help_command=None, intents=disnake.Intents.all(),
+                   test_guilds=[1067903829040955432])
 
+# TODO подключить словарь
 CENSORED_WORDS = ["one", "two"]  # слова для цензуры - можно подключить тектовый файл
 
 
@@ -44,7 +49,21 @@ async def on_message(message):
                 await message.channel.send(f"{message.author.mention} такие слова запрещены!")
 
 
-@bot.command()
+# Обработка ошибок
+# TODO добавить примеры ошибок
+@bot.event()
+async def on_command_error(ctx, error):
+    print(error)
+
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f"{ctx.author}, у вас недостаточно прав для выполнения данной команды")
+    elif isinstance(error, commands.UserInputError):
+        await ctx.send(embed=disnake.Embed(
+            description=f"Правильное использование команды: '{ctx.prefix}{ctx.command.name}'({ctx.command.brief})\n"
+                        f"Пример: {ctx.prefix}{ctx.command.usage}"
+        ))
+
+@bot.command(brief="Описание команды")
 @commands.has_permissions(kick_members=True, administrator=True)
 async def kick(ctx, member: disnake.Member, *, reason="Нарушение правил"):
     await ctx.send(f"Администратор {ctx.author.mention} исключил пользователя {member.mention}")
@@ -58,5 +77,22 @@ async def ban(ctx, member: disnake.Member, *, reason="Нарушение пра�
     await ctx.send(f"Администратор {ctx.author.mention} забанил пользователя {member.mention}")
     await member.ban(reason=reason)
     await ctx.message.delete()
+
+# TODO mute of the member
+# Создаем роль - отнимаем у нее право говорить - создаем функию и выдаем роль
+
+
+# slash - command
+@bot.slash_command(description="Калькулятор")
+async def calc(inter, a: int, oper: str, b: int):
+    if oper == "+":
+        result = a + b
+    elif oper == "-":
+        result = a - b
+    else:
+        result = "Неверный оператор"
+
+    await inter.send(str(result))
+
 
 bot.run(config["token"])
