@@ -1,6 +1,7 @@
 import json
 import disnake
 from disnake.ext import commands
+from typing import Optional
 
 # TODO добавить проигрывание музыки из YouTube
 # TODO добавить библиотеку некоторых фраз (мотивация/анекдоты/прочее) и показывать рандомную при вызове команды
@@ -9,8 +10,48 @@ from disnake.ext import commands
 file = open("config.json", "r")
 config = json.load(file)
 
-bot = commands.Bot(command_prefix=".", help_command=None, intents=disnake.Intents.all(),
+bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=disnake.Intents.all(),
                    test_guilds=[1067903829040955432])
+
+class Confirm(disnake.ui.View):
+    def __init__(self):
+        super.__init__(timeout=10.0)
+        self.value = Optional[bool]
+
+    @disnake.ui.button(label="Confirm", style=disnake.ButtonStyle.green, emoji="༼ つ ◕_◕ ༽つ", row=0)  #  win + точка запятая
+    async def confirm(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
+        await inter.response.send_message("Кнопка нажата")
+        self.value = True
+        self.stop()
+
+    @disnake.ui.button(label="Cancel", style=disnake.ButtonStyle.red, emoji="🤞", row=1)
+    async def cancel(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
+        await inter.response.send_message("okey")
+        self.value = False
+        self.stop()
+
+
+class LinkToParty(disnake.ui.View):
+
+    def __init__(self):
+        super.__init__()
+        self.add_item(disnake.ui.button(label="Join", url="https://habr.com/ru/post/649363/"))
+
+
+@bot.command(name="party")
+async def ask_party(ctx):
+    view = Confirm()
+
+    await ctx.send("Accept ar deny?", view=view)
+    await view.wait()
+
+    if view.value is None:
+        await ctx.send("Time run away")
+    elif view.value:
+        await ctx.send("Good", view=LinkToParty())
+    else:
+        await ctx.send("Bad")
+
 
 # TODO подключить словарь
 CENSORED_WORDS = ["one", "two"]  # слова для цензуры - можно подключить тектовый файл
