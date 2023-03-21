@@ -54,7 +54,7 @@ class Dropdown(disnake.ui.StringSelect):
         )
 
     async def callback(self, inter: disnake.MessageInteraction):
-        await inter.response.send_message(f"Вы заказали {self.value[0]}")
+        await inter.response.send_message(f"Вы заказали {self.values[0]}")
 
 class DropdownView(disnake.ui.View):
     def __init__(self):
