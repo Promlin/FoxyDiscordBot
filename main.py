@@ -15,17 +15,17 @@ bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, in
 
 class Confirm(disnake.ui.View):
     def __init__(self):
-        super.__init__(timeout=10.0)
+        super().__init__(timeout=10.0)
         self.value = Optional[bool]
 
-    @disnake.ui.button(label="Confirm", style=disnake.ButtonStyle.green, emoji="༼ つ ◕_◕ ༽つ", row=0)  #  win + точка запятая
-    async def confirm(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
+    @disnake.ui.button(label="Confirm", style=disnake.ButtonStyle.green, emoji="🎈", row=0)  #  win + точка запятая
+    async def confirm(self, button: disnake.ui.Button, inter: disnake.CommandInteraction):
         await inter.response.send_message("Кнопка нажата")
         self.value = True
         self.stop()
 
-    @disnake.ui.button(label="Cancel", style=disnake.ButtonStyle.red, emoji="🤞", row=1)
-    async def cancel(self, button: disnake.ui.Button, inter: disnake.MessageInteraction):
+    @disnake.ui.button(label="Cancel", style=disnake.ButtonStyle.red, emoji="🤞", row=0)
+    async def cancel(self, button: disnake.ui.Button, inter: disnake.CommandInteraction):
         await inter.response.send_message("okey")
         self.value = False
         self.stop()
@@ -34,8 +34,8 @@ class Confirm(disnake.ui.View):
 class LinkToParty(disnake.ui.View):
 
     def __init__(self):
-        super.__init__()
-        self.add_item(disnake.ui.button(label="Join", url="https://habr.com/ru/post/649363/"))
+        super().__init__()
+        self.add_item(disnake.ui.Button(label="Join", url="https://habr.com/ru/post/649363/"))
 
 
 @bot.command(name="party")
