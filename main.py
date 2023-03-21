@@ -37,6 +37,34 @@ class LinkToParty(disnake.ui.View):
         super().__init__()
         self.add_item(disnake.ui.Button(label="Join", url="https://habr.com/ru/post/649363/"))
 
+class Dropdown(disnake.ui.StringSelect):
+
+    def __init__(self):
+        options = [
+            disnake.SelectOption(label="Burger", description="Сочно!", emoji="🍔"),
+            disnake.SelectOption(label="Sushi", description="Сыро!", emoji="🍣"),
+            disnake.SelectOption(label="Pizza", description="Krang!!!", emoji="🍕")
+        ]
+
+        super().__init__(
+            placeholder="MENU",
+            min_values=1,
+            max_values=1,
+            options=options
+        )
+
+    async def callback(self, inter: disnake.MessageInteraction):
+        await inter.response.send_message(f"Вы заказали {self.value[0]}")
+
+class DropdownView(disnake.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.add_item(Dropdown())
+
+@bot.command()
+async def order(ctx):
+    await ctx.send("Выберите что хотите заказать", view=DropdownView())
+
 
 @bot.command(name="party")
 async def ask_party(ctx):
