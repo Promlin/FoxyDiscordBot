@@ -38,6 +38,21 @@ class LinkToParty(disnake.ui.View):
         self.add_item(disnake.ui.Button(label="Join", url="https://habr.com/ru/post/649363/"))
 
 
+@commands.command(name="party")
+async def ask_party(ctx):
+    view = Confirm()
+
+    await ctx.send("Accept ar deny?", view=view)
+    await view.wait()
+
+    if view.value is None:
+        await ctx.send("Time run away")
+    elif view.value:
+        await ctx.send("Good", view=LinkToParty())
+    else:
+        await ctx.send("Bad")
+
+
 class Dropdown(disnake.ui.StringSelect):
 
     def __init__(self):
@@ -68,20 +83,6 @@ class DropdownView(disnake.ui.View):
 async def order(ctx):
     await ctx.send("Выберите что хотите заказать", view=DropdownView())
 
-
-@commands.command(name="party")
-async def ask_party(ctx):
-    view = Confirm()
-
-    await ctx.send("Accept ar deny?", view=view)
-    await view.wait()
-
-    if view.value is None:
-        await ctx.send("Time run away")
-    elif view.value:
-        await ctx.send("Good", view=LinkToParty())
-    else:
-        await ctx.send("Bad")
 
 
 # TODO подключить словарь
