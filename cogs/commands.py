@@ -7,7 +7,9 @@ from typing import Optional
 # TODO добавить библиотеку некоторых фраз (мотивация/анекдоты/прочее) и показывать рандомную при вызове команды
 # TODO устанавливать напоминания и делать оповещения
 
-class CMDUsers(commands.Cogs):
+
+
+class CMDUsers(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -156,18 +158,6 @@ async def ban(ctx, member: disnake.Member, *, reason="Нарушение пра�
 # TODO mute of the member
 # Создаем роль - отнимаем у нее право говорить - создаем функию и выдаем роль
 
-
-# slash - command
-@commands.slash_command(description="Калькулятор")
-async def calc(inter, a: int, oper: str, b: int):
-    if oper == "+":
-        result = a + b
-    elif oper == "-":
-        result = a - b
-    else:
-        result = "Неверный оператор"
-
-    await inter.send(str(result))
 
 
 def setup(bot):

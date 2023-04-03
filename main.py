@@ -9,6 +9,11 @@ config = json.load(file)
 bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=disnake.Intents.all(),
                    test_guilds=[1067903829040955432])
 
+@bot.event
+async def on_ready():
+    print('Ready')
+    await bot.change_presence(activity=disnake.Game(name="Your Server"))
+
 @bot.command()
 @commands.is_owner()
 async def load(ctx, extension):
