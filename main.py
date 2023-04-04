@@ -6,7 +6,7 @@ from disnake.ext import commands
 file = open("config.json", "r")
 config = json.load(file)
 
-bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=disnake.Intents.all(),
+bot = commands.Bot(command_prefix="/", intents=disnake.Intents.all(),
                    test_guilds=[1067903829040955432])
 
 @bot.event
@@ -32,5 +32,7 @@ async def reload(ctx, extension):
 for filename in os.listdir("cogs"):
     if filename.endswith(".py"):
         bot.load_extension(f"cogs.{filename[:-3]}")
+
+
 
 bot.run(config["token"])
