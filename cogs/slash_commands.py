@@ -1,7 +1,6 @@
 import disnake
 from disnake.ext import commands
 from typing import Optional
-from cogs.commands import CMDUsers
 
 """
 I'm going to create such functions:
@@ -9,6 +8,10 @@ I'm going to create such functions:
 -
 -
 """
+class SlashCommands(commands.Cog):
+
+    def __init__(self, bot):
+        self.bot = bot
 
 
 # slash - command
@@ -76,12 +79,8 @@ async def anime(inter, genre: str):
         'Yuri!!! on Ice': 'https://animego.org/anime/yuri-na-ldu-s165'
     }
 
-    for key in genre_dict:
-        print(key)
+    await inter.send(str(genre_dict[genre]))
 
 
-def setup():
-    bot = commands.Bot(command_prefix=commands.when_mentioned, help_command=None, intents=disnake.Intents.all(),
-                       test_guilds=[1067903829040955432])
-
-    bot.add_cog(CMDUsers(bot))
+def setup(bot):
+    bot.add_cog(SlashCommands(bot))
