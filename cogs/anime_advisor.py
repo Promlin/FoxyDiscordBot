@@ -2,6 +2,7 @@ from random import randint
 import disnake
 from disnake.ext import commands
 
+# TODO add stickers and description to dropdown menu
 
 class AnimeAdvisor(commands.Cog):
     def __init__(self, bot):
@@ -66,11 +67,35 @@ class DropdownAnime(disnake.ui.StringSelect):
             'Yuri!!! on Ice': 'https://animego.org/anime/yuri-na-ldu-s165'
         }
 
+        self.emoji_dict = {
+            'romance': ["💗"],
+            'everyday life': ["🏄‍♀️"],
+            'detective': ["🔎"],
+            'drama': ["🤧"],
+            'comedy': ["🤪"],
+            'shonen': ["⚔"],
+            'fantasy': ["🏹"],
+            'sport': ["🥇"]
+        }
+
+        self.description_dict = {
+            'romance': ["Very cute stories"],
+            'everyday life': ["To relax after hard work"],
+            'detective': ["Exciting stories"],
+            'drama': ["Smth make you cry"],
+            'comedy': ["For loud laughter"],
+            'shonen': ["Epic battles"],
+            'fantasy': ["To change your reality"],
+            'sport': ["For strong motivation"]
+        }
+
         options = []
 
         genres = list(self.genre_dict)
         for genre in genres:
-            options.append(disnake.SelectOption(label=genre))
+            options.append(disnake.SelectOption(
+                label=genre, description=str(self.description_dict[genre][0]),
+                emoji=self.emoji_dict[genre][0]))
 
         super().__init__(
             placeholder="Choose the genre",
