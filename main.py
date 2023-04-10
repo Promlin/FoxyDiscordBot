@@ -6,7 +6,7 @@ from disnake.ext import commands
 file = open("config.json", "r")
 config = json.load(file)
 
-bot = commands.Bot(command_prefix="/", intents=disnake.Intents.all(),
+bot = commands.Bot(command_prefix=".", intents=disnake.Intents.all(),
                    test_guilds=[1067903829040955432])
 
 @bot.event

@@ -4,7 +4,7 @@ from disnake.ext import commands
 """
 I'm going to create such functions:
 - I need to come up with some ideas 
-- Instruction
+- Instruction - Красиво оформить
 -
 """
 
