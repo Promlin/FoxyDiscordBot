@@ -33,6 +33,19 @@ for filename in os.listdir("cogs"):
     if filename.endswith(".py"):
         bot.load_extension(f"cogs.{filename[:-3]}")
 
+@bot.event
+async def on_member_join(member):
+    channel = bot.get_channel(1067903829829496933)
+    # role = disnake.utils.get(member.guild.roles, id = 123)
+    # await member.add_roles(role)
 
+    embed = disnake.Embed(
+        title="Welcome!",
+        description=f"User {member.name} joined the channel!",
+        color=disnake.Colour.yellow()
+    )
+    embed.set_image(file=disnake.File("welcome_image.png"))
+
+    await channel.send(embed=embed)
 
 bot.run(config["token"])
