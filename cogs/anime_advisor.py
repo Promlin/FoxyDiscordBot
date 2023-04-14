@@ -2,8 +2,7 @@ from random import randint
 import disnake
 from disnake.ext import commands
 
-# TODO сделать красивым отклик бота красиво оформленым
-# TODO добавить описание в отклик
+# TODO добавить картинки для каждого аниме или картинки для рубрики
 
 class AnimeAdvisor(commands.Cog):
     def __init__(self, bot):
@@ -218,9 +217,16 @@ class DropdownAnime(disnake.ui.StringSelect):
         link = self.anime_dict[to_advise][0]
         annotation = self.anime_dict[to_advise][1]
 
-        await inter.response.send_message(f"I can advise you {to_advise}. \n "
-                                          f"You can follow the link {link} \n"
-                                          f"{annotation}")
+        embed = disnake.Embed(
+            title=to_advise,
+            description=link,
+            color=disnake.Colour.green()
+        )
+
+        embed.add_field(name="Annotation", value=annotation, inline=False)
+        embed.set_image(file=disnake.File("welcome_image.png"))
+
+        await inter.response.send_message(embed=embed)
 
 
 class DropdownViewAnime(disnake.ui.View):
