@@ -60,7 +60,7 @@ async def on_member_join(member):
         description=f"User {member.name} joined the channel!",
         color=disnake.Colour.yellow()
     )
-    embed.set_image(file=disnake.File("welcome_image.png"))
+    embed.set_image(file=disnake.File("images/welcome_image.png"))
 
     await channel.send(embed=embed)
 

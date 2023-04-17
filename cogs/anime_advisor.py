@@ -393,7 +393,7 @@ class DropdownAnime(disnake.ui.StringSelect):
         )
 
         embed.add_field(name="Annotation", value=annotation, inline=False)
-        embed.set_image(file=disnake.File("welcome_image.png"))
+        embed.set_image(file=disnake.File("images/for_advisor.png"))
 
         await inter.response.send_message(embed=embed)
 
