@@ -3,6 +3,22 @@ import json
 import disnake
 from disnake.ext import commands
 
+# TODO добавить проигрывание музыки из YouTube
+# TODO добавить библиотеку некоторых фраз (мотивация/анекдоты/прочее) и показывать рандомную при вызове команды
+# TODO устанавливать напоминания и делать оповещения
+
+"""
+- Search and play music
+- Create own music list for users
+- Conduct polls and votes
+- Translate messages (text)
+- Give roles
+- Spam and obscene language protection
+- Conduct draws and sum up the results
+- Interactions: virtual hug, kiss, hit, feed
+- Search in google
+"""
+
 file = open("config.json", "r")
 config = json.load(file)
 
