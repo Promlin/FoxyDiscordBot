@@ -21,7 +21,7 @@ class SlashCommands(commands.Cog):
                "/anime_advisor - Advisor that presents you best anime titles in different genres"
         await inter.send(str(text))
 
-    @commands.slash_command(description="Калькулятор")
+    @commands.slash_command(description="Calculator")
     async def calc(self, inter: disnake.ApplicationCommandInteraction, a: int, oper: str, b: int):
         if oper == "+":
             result = a + b
@@ -38,6 +38,16 @@ class SlashCommands(commands.Cog):
             result = "Неверный оператор"
 
         await inter.send(str(result))
+
+    # I'm going to make form for asking members
+    @commands.slash_command(description="Inquirer")
+    async def inquirer(self, inter: disnake.ApplicationCommandInteraction, question: str):
+        self.send_question(inter, question)
+
+
+    def send_question(self, inter: disnake.ApplicationCommandInteraction, question):
+        await inter.send(str(question))
+
 
 
 def setup(bot):
